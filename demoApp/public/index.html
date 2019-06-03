@@ -1,0 +1,69 @@
+<!doctype html>
+<html ng-app="crudApp">
+<head>
+  <title>
+     CRUD Angular 1.2
+  </title>
+   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+ 
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script> -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+   <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+</head>
+
+  <body ng-controller="mainController">
+<div>
+  
+<div class="container" >
+  <div class = "panel panel-default" style="margin:3%;">
+      <div class="panel-heading">
+        <h3>Angular 1.2 CRUD Operation</h3>
+      </div>
+           
+      <div class="panel-body">
+          <form>
+              First Name: <input type="text"  ng-model="firstname" > 
+              Last Name: <input type="text" ng-model="lastname" > 
+              Age: <input type="number" ng-model="age"> <br> <br>
+           </form>
+          
+
+          <button type="submit" class="btn btn-success" ng-click="showValues()">Show Values from DB</button>
+    </div>
+    <div ng-show="firstname && lastname && age" >
+      <h4>
+  	You entered: {{firstname}}--{{lastname}}--{{age}}
+  </h4>
+  <button type="submit" class="btn btn-success" ng-click="createTodo()">Add</button>
+   
+  </div>
+</div>
+  <h3 style="margin-bottom: 2%;">Fetching data</h3>
+
+<table class="table table-striped" style="width: 50%;height:40%;" align="center">
+  <tr  ng-repeat="todo in todos" >
+     <td>{{ $index + 1 }}. </td>
+    <!-- <td>{{ todo._id }}</td> -->
+    <td> {{ todo.fname }} </td>
+    <td>{{ todo.lname }} </td>
+    <td>{{ todo.age }} </td>
+    <td style="cursor:pointer;" class="badge" ng-click="removeItem(todo.fname )">Delete</td>
+   <!--  <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>-->
+  </tr>
+</table>
+
+</div>
+  </body>
+  <script type="text/javascript" src="indexCtrl.js"></script>
+
+</html>
+
