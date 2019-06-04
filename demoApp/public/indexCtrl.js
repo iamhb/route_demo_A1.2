@@ -2,13 +2,13 @@ var app = angular.module('crudApp', []);
 app.controller('mainController', function($scope, $http) {
     console.log("in mainController");
 
- $http.get('/hello')
+ $http.get('/api/showData')
         .success(function(data) {
             $scope.todos = data;
             console.log(data);
         })
         .error(function(data) {
-            console.log('Error: ' + data);
+            console.log('Error: ' );
         });
 
 
@@ -44,6 +44,7 @@ app.controller('mainController', function($scope, $http) {
             .error(function(data) {
                 console.log('Error: ');
             });
+
             $scope.showValues();
     };
 
@@ -56,7 +57,7 @@ app.controller('mainController', function($scope, $http) {
             };
 
 
-      $http.post('/api/removeValue', $scope.formData)
+      $http.post('/api/removeData', $scope.formData)
             .success(function(data) {
                 console.log("delete success");
                 $scope.showValues();
@@ -80,5 +81,24 @@ app.controller('mainController', function($scope, $http) {
             console.log('Error: ' + data);
         });
     }
+
+    $scope.updateValueFun = function(){
+        console.log("in update function js");
+        console.log("old value:"+ $scope.selectedValue + "new value:" + $scope.updatedValue);
+             $scope.formData = {
+            oldValue: $scope.selectedValue,
+            newValue: $scope.updatedValue
+            };
+
+        $http.post('/api/updateData', $scope.formData)
+            .success(function(data){
+                console.log(data);
+                $scope.showValues();
+            })
+            .error(function(err){
+                console.log("error:" + err);
+            });
+    }
+
 
 });

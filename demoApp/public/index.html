@@ -5,7 +5,6 @@
      CRUD Angular 1.2
   </title>
    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
- 
 
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script> -->
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
@@ -60,6 +59,30 @@
    <!--  <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>-->
   </tr>
 </table>
+
+<div class="container" >
+  <div class = "panel panel-default" style="margin:3%;">
+
+<div class="panel-heading">
+        <h3>Update</h3>
+      </div>
+
+
+
+
+           
+<div class="panel-body">
+<select ng-model="selectedValue">
+<option ng-repeat="todo in todos">{{todo.fname}}</option>
+</select>
+Update First Name: <input type="text" ng-model="updatedValue" > 
+
+<button type="submit" class="btn btn-success" ng-click="updateValueFun()">Update</button>
+</div>
+
+
+</div>
+</div>
 
 </div>
   </body>

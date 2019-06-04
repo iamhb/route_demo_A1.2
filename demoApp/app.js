@@ -34,12 +34,12 @@ app.get('/', function(req,res){
 // 	next()
 // })
 var modelVar = require('./public/models/dbmodel').dd;
+var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
 
 app.get('/api/showData', function(req, res) { 
 	console.log("ggggg")
-        var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
-        var modelVarObj = new modelVar();
-        // use mongoose to get all todos in the database
+        
+         var modelVarObj = new modelVar();
         modelVar.find(function(err, data) {
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
@@ -48,10 +48,67 @@ app.get('/api/showData', function(req, res) {
             res.json(data); // return all todos in JSON format
         });
     });
-app.get('/hello', function(req, res){
-	console.log("hi");
-	res.send("bye");
+
+app.post('/api/addData', function(req, res) {
+      console.log("in server api");
+      console.log("values:" + req.body);
+
+      var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
+      var modelVarObj = new modelVar();
+
+      modelVarObj.fname=req.body.fname
+      modelVarObj.lname=req.body.lname
+      modelVarObj.age=req.body.age
+        // create a todo, information comes from AJAX request from Angular
+        modelVarObj.save((err)=>{
+          res.send(modelVarObj);
+        console.log("ADDED");
+        });
+    });
+
+
+app.post('/api/removeData',function(req,res){
+  console.log("In Server Remove");
+  console.log("values:" + req.body.remVar);
+
+    modelVar.remove( {"fname": req.body.remVar },function (err, docs) {
+                    if(err)
+                        {
+                            res.status(500).json(err);
+                        }
+                    else if(docs)
+                        {
+                            console.log(docs);
+                            console.log("del successfully");
+                            res.status(200).json(docs);
+                        }
 });
+  });
+
+app.post('/api/updateData', function(req, res){
+  console.log(" in update api ");
+  console.log("values:");
+  console.log(req.body.oldValue + " " + req.body.newValue);
+
+ modelVar.update( {"fname": req.body.oldValue },{ $set:{"fname": req.body.newValue} },function (err, docs) {
+                    if(err)
+                        {
+                            res.status(500).json(err);
+                        }
+                    else if(docs)
+                        {
+                            console.log(docs);
+                            console.log("Updated successfully");
+                            res.status(200).json(docs);
+                        }
+}); 
+
+
+});
+
+
+
+
 
 
 // error handler
@@ -72,7 +129,7 @@ app.use(function(req, res, next) {
 
 
 var server = http.createServer(app).listen(port,function(){
-  console.log("server start from "+port);
+  console.log("server listening at "+port);
 });
 
 module.exports = app;
