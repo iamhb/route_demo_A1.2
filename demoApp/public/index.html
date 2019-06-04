@@ -19,11 +19,64 @@
 
 </head>
 
-  <body ng-controller="mainController">
-<div>
+<body ng-controller="mainController">
   
-<div class="container" >
-  <div class = "panel panel-default" style="margin:3%;">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 rborder">
+        <form>
+          <div class="form-group">
+            <h3>Add Values</h3>
+            <label>First Name: </label>
+            <input type="text" class="form-control" ng-model="firstname">
+          </div>
+          <div class="form-group">
+            <label>Last Name: </label>
+            <input type="text" class="form-control" ng-model="lastname">
+          </div>
+          <div class="form-group">
+            <label>Age: </label>
+            <input type="text" class="form-control" ng-model="age">
+          </div>
+          <button type="submit" class="btn btn-success" ng-click="createTodo()">Add</button>
+          <button type="submit" class="btn btn-success" ng-click="showValues()">Show Values from DB</button>
+        </form>
+    </div>
+
+    <div class="col-md-4 rborder">
+      <h3>Update Values</h3>
+      <div class="form-group">
+        <select ng-model="selectedValue" class="form-control">
+          <option ng-repeat="todo in todos">{{todo.fname}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+            <label>Update First Name: </label>
+            <input type="text" class="form-control" ng-model="updatedValue">
+      </div>
+      <button type="submit" class="btn btn-success" ng-click="updateValueFun()">Update</button>      
+    </div>
+
+    <div class="col-md-4 rborder">
+      <h3">Fetching data</h3>
+
+      <table class="table table-striped" style="width: 50%;height:40%;" align="center">
+        <tr  ng-repeat="todo in todos" >
+           <td>{{ $index + 1 }}. </td>
+          <!-- <td>{{ todo._id }}</td> -->
+          <td> {{ todo.fname }} </td>
+          <td>{{ todo.lname }} </td>
+          <td>{{ todo.age }} </td>
+          <td style="cursor:pointer;" class="badge" ng-click="removeItem(todo.fname )">Delete</td>
+         <!--  <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>-->
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  <!-- <div class = "panel panel-default" style="margin:3%;">
       <div class="panel-heading">
         <h3>Angular 1.2 CRUD Operation</h3>
       </div>
@@ -51,12 +104,12 @@
 <table class="table table-striped" style="width: 50%;height:40%;" align="center">
   <tr  ng-repeat="todo in todos" >
      <td>{{ $index + 1 }}. </td>
-    <!-- <td>{{ todo._id }}</td> -->
+     <td>{{ todo._id }}</td> 
     <td> {{ todo.fname }} </td>
     <td>{{ todo.lname }} </td>
     <td>{{ todo.age }} </td>
     <td style="cursor:pointer;" class="badge" ng-click="removeItem(todo.fname )">Delete</td>
-   <!--  <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>-->
+    <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>
   </tr>
 </table>
 
@@ -84,7 +137,7 @@ Update First Name: <input type="text" ng-model="updatedValue" >
 </div>
 </div>
 
-</div>
+</div> -->
   </body>
   <script type="text/javascript" src="indexCtrl.js"></script>
 

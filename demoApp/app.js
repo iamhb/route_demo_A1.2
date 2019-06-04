@@ -11,6 +11,12 @@ var mongoose  = require('mongoose');
 var app = express();
 
 
+var create= require('./routes/create');
+/*var  delete= require('./routes/delete');
+var  update= require('./routes/update');*/
+var  read  = require('./routes/read');
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -33,38 +39,12 @@ app.get('/', function(req,res){
 // 	console.log("Hello!!");
 // 	next()
 // })
-var modelVar = require('./public/models/dbmodel').dd;
+//var modelVar = require('./public/models/dbmodel').dd;
 var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
 
-app.get('/api/showData', function(req, res) { 
-	console.log("ggggg")
-        
-         var modelVarObj = new modelVar();
-        modelVar.find(function(err, data) {
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-            if (err)
-                res.send(err)
-            console.log(data);
-            res.json(data); // return all todos in JSON format
-        });
-    });
+app.get('/api/showData', read.showData);
 
-app.post('/api/addData', function(req, res) {
-      console.log("in server api");
-      console.log("values:" + req.body);
-
-      var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
-      var modelVarObj = new modelVar();
-
-      modelVarObj.fname=req.body.fname
-      modelVarObj.lname=req.body.lname
-      modelVarObj.age=req.body.age
-        // create a todo, information comes from AJAX request from Angular
-        modelVarObj.save((err)=>{
-          res.send(modelVarObj);
-        console.log("ADDED");
-        });
-    });
+app.post('/api/addData',create.addData);
 
 
 app.post('/api/removeData',function(req,res){
@@ -90,7 +70,7 @@ app.post('/api/updateData', function(req, res){
   console.log("values:");
   console.log(req.body.oldValue + " " + req.body.newValue);
 
- modelVar.update( {"fname": req.body.oldValue },{ $set:{"fname": req.body.newValue} },function (err, docs) {
+ modelVar.updateOne( {"fname": req.body.oldValue },{ $set:{"fname": req.body.newValue} },function (err, docs) {
                     if(err)
                         {
                             res.status(500).json(err);
