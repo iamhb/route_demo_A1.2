@@ -26,19 +26,19 @@
     <div class="col-md-3 panel panel-default pad">
         <form name="myForm">
           <div class="form-group">
-            <h3 class="head" align="center">Add Values</h3>
+            <h3 class="head" align="center">Add Data</h3>
             <label>First Name: </label>
-            <input type="text" class="form-control" ng-model="firstname" required ng-minlength="3">
+            <input type="text" class="form-control text-capitalize"  ng-model="firstname" required ng-minlength="3">
 
           </div>
 
           <div class="form-group">
             <label>Last Name: </label>
-            <input type="text" class="form-control" ng-model="lastname" ng-minlength="3">
+            <input type="text" class="form-control text-capitalize" ng-model="lastname" ng-minlength="3">
           </div>
           <div class="form-group">
             <label>Age: </label>
-            <input type="number" class="form-control" ng-model="age" ng-minlength="1" ng-maxlength="3" ng-required>
+            <input type="number" class="form-control" ng-model="age" ng-minlength="1" ng-maxlength="2" ng-required>
           </div>
 
           
@@ -54,24 +54,36 @@
           <div class="alert alert-danger" ng-show="isValidFailed">
         <strong>Danger!</strong> Kindly provide us valid information
          </div>
-
-
-      
         </form>
     </div>
 
     <div class="col-md-1"></div>
 
     <div class="col-md-3 panel panel-default pad">
-      <h3 class="head" align="center">Update Values</h3>
+      <h3 class="head" align="center">Update Data</h3>
       <div class="form-group">
-        <label>Existed First Name: </label>
+
+        <label>Choose First Name Value to Update: </label>
+
         <select ng-model="selectedValue" class="form-control">
           <option ng-repeat="todo in todos">{{todo.fname}}</option>
-        </select>
+        </select><br>
+
+        <label>Choose Column: </label>
+         <select ng-model="columnValue" ng-click="showColumnValues(columnValue)" class="form-control">
+          <option value="fname">First Name</option>
+          <option value="lname">Last Name</option>
+          <option value="age">Age</option>
+        </select> <br>
+
+          <select ng-model="updateOldValue" class="form-control">
+          <option ng-repeat="i in columnValueArr">{{i}}</option>
+        </select><br>
+
+
       </div>
       <div class="form-group">
-            <label>Update First Name: </label>
+            <label>Update</label>
             <input type="text" class="form-control" ng-model="updatedValue">
       </div>
       <div align="center">
@@ -82,7 +94,7 @@
     <div class="col-md-1"></div>
 
     <div class="col-md-4">
-      <h3 class="head" align="center">Fetching Data</h3>
+      <h3 class="head" align="center">Fetched Data</h3>
 
       <table class="table table-striped" align="center">
         <thead>

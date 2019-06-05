@@ -26,6 +26,9 @@ var  remove= require('./routes/rremove');
 var  update= require('./routes/rupdate');
 var  read  = require('./routes/rread');
 
+var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -44,25 +47,15 @@ app.get('/', function(req,res){
 	res.sendFile("./public/index.html");
 });
 
-// app.get('*', function(){
-// 	console.log("Hello!!");
-// 	next()
-// })
-//var modelVar = require('./public/models/dbmodel').dd;
-var db = mongoose.connect('mongodb://localhost:27017/hbdbdemo' ,{ useNewUrlParser: true });
-
 app.get('/api/showData',read.showData);
+
+app.post('/api/showColumnData',read.showColumnData);
 
 app.post('/api/addData',create.addData);
 
 app.post('/api/removeData',remove.removeData);
 
 app.post('/api/updateData', update.updateData);
-
-
-
-
-
 
 // error handler
 app.use(function(err, req, res, next) {
