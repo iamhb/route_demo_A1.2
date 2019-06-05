@@ -23,29 +23,49 @@
   
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4 rborder">
-        <form>
+    <div class="col-md-3 panel panel-default pad">
+        <form name="myForm">
           <div class="form-group">
-            <h3>Add Values</h3>
+            <h3 class="head" align="center">Add Values</h3>
             <label>First Name: </label>
-            <input type="text" class="form-control" ng-model="firstname">
+            <input type="text" class="form-control" ng-model="firstname" required ng-minlength="3">
+
           </div>
+
           <div class="form-group">
             <label>Last Name: </label>
-            <input type="text" class="form-control" ng-model="lastname">
+            <input type="text" class="form-control" ng-model="lastname" ng-minlength="3">
           </div>
           <div class="form-group">
             <label>Age: </label>
-            <input type="text" class="form-control" ng-model="age">
+            <input type="number" class="form-control" ng-model="age" ng-minlength="1" ng-maxlength="3" ng-required>
           </div>
-          <button type="submit" class="btn btn-success" ng-click="createTodo()">Add</button>
-          <button type="submit" class="btn btn-success" ng-click="showValues()">Show Values from DB</button>
+
+          
+          <div align="center">
+            <button type="submit" class="btn btn-success" ng-click="createTodo()"  ng-disabled="myForm.$invalid" >Add</button>
+          </div> <br>
+
+          <div class="alert alert-success" ng-show="isSuccess">
+          <strong>Success!</strong> Thanks! Data has been added successfully
+          </div>
+
+          
+          <div class="alert alert-danger" ng-show="isValidFailed">
+        <strong>Danger!</strong> Kindly provide us valid information
+         </div>
+
+
+      
         </form>
     </div>
 
-    <div class="col-md-4 rborder">
-      <h3>Update Values</h3>
+    <div class="col-md-1"></div>
+
+    <div class="col-md-3 panel panel-default pad">
+      <h3 class="head" align="center">Update Values</h3>
       <div class="form-group">
+        <label>Existed First Name: </label>
         <select ng-model="selectedValue" class="form-control">
           <option ng-repeat="todo in todos">{{todo.fname}}</option>
         </select>
@@ -54,22 +74,36 @@
             <label>Update First Name: </label>
             <input type="text" class="form-control" ng-model="updatedValue">
       </div>
-      <button type="submit" class="btn btn-success" ng-click="updateValueFun()">Update</button>      
+      <div align="center">
+        <button type="submit" class="btn btn-success" ng-click="updateValueFun()">Update</button>
+      </div>      
     </div>
 
-    <div class="col-md-4 rborder">
-      <h3">Fetching data</h3>
+    <div class="col-md-1"></div>
 
-      <table class="table table-striped" style="width: 50%;height:40%;" align="center">
-        <tr  ng-repeat="todo in todos" >
-           <td>{{ $index + 1 }}. </td>
-          <!-- <td>{{ todo._id }}</td> -->
-          <td> {{ todo.fname }} </td>
-          <td>{{ todo.lname }} </td>
-          <td>{{ todo.age }} </td>
-          <td style="cursor:pointer;" class="badge" ng-click="removeItem(todo.fname )">Delete</td>
-         <!--  <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>-->
-        </tr>
+    <div class="col-md-4">
+      <h3 class="head" align="center">Fetching Data</h3>
+
+      <table class="table table-striped" align="center">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  ng-repeat="todo in todos">
+            <td>{{ $index + 1 }}. </td>
+            <!-- <td>{{ todo._id }}</td> -->
+            <td> {{ todo.fname }} </td>
+            <td>{{ todo.lname }} </td>
+            <td>{{ todo.age }} </td>
+            <td style="cursor:pointer;background-color:#ff4d4d" class="badge remv" ng-click="removeItem(todo.fname )">x</td>
+           <!--  <span style="cursor:pointer;" class="badge" ng-click="removeItem($index)"> Delete</span>-->
+          </tr>
+      </tbody>
       </table>
     </div>
   </div>

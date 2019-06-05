@@ -1,5 +1,6 @@
 var app = angular.module('crudApp', []);
-app.controller('mainController', function($scope, $http) {
+app.controller('mainController', function($scope, $http) 
+{
 
 console.log("in mainController");
 
@@ -10,10 +11,11 @@ console.log("in mainController");
             console.log(data);
         })
         .error(function(data) {
-            console.log('Error: ' );
+            console.log('Error: ' +data);
         });
 
 $scope.createTodo = function() {
+    if($scope.firstname && $scope.lastname &&  $scope.age && $scope.age >1   ){
     	console.log("in js api:   "+ $scope.firstname+ "-" + $scope.lastname + "-" +  $scope.age);
         
         $scope.formData = {
@@ -28,11 +30,22 @@ $scope.createTodo = function() {
             .success(function(data) {
                 $scope.todos = data; //assigning value from db(Server.js)
                 console.log(data);
+
+                $scope.isSuccess= true ;
+                $scope.isValidFailed=false ;
+
+
             })
             .error(function(data) {
                 console.log('Error: ');
             });
 
+            
+} else
+{
+    $scope.isValidFailed=true ;
+      $scope.isSuccess= false ;
+}
             $scope.showValues();
     };
 
