@@ -21,9 +21,9 @@ console.log("in mainController");
             console.log('Error: ' +data);
         });
 
-$scope.createTodo = function() {
-    if($scope.firstname && $scope.lastname &&  $scope.age && $scope.age >1   )
-        {
+//adding data
+$scope.createData = function() {
+    if($scope.firstname && $scope.lastname &&  $scope.age && $scope.age >1   ){
 
         $scope.firstname= $scope.firstname.charAt(0).toUpperCase() + $scope.firstname.slice(1);
         $scope.lastname=  $scope.lastname.charAt(0).toUpperCase() + $scope.lastname.slice(1);
@@ -45,41 +45,54 @@ $scope.createTodo = function() {
                 console.log(data);
                 $scope.isSuccess= true ;
                 $scope.isValidFailed=false ;
+                $scope.isUpdateSuccess= false ;
+            $scope.isUpdateFailed=false
             })
             .error(function(data) {
                 console.log('Error: ');
             });
     }else
-        {
-            $scope.isValidFailed=true ;
-            $scope.isSuccess= false ;
-        }
-    $scope.showValues();
+    {
+        $scope.isValidFailed=true ;
+        $scope.isSuccess= false ;
+        $scope.isUpdateSuccess= false ;
+        $scope.isUpdateFailed=false
+    }
+        $scope.showValues();
     };
 
 
+
+
+
+
+
+//showing column values to choose dynamically for updation
 $scope.showColumnValues= function(columnValue)
 {
-    if(columnValue)
+    if($scope.columnValue)
     {
-       $scope.formData ={
+
+        console.log("scope column value:"+ $scope.columnValue);
+        $scope.formData ={
                             columnValue: columnValue
                         };
-console.log($scope.formData);
+        console.log($scope.formData);
 
         $http.post('/api/showColumnData', $scope.formData)
-        .success(function(data) {
-            $scope.columnValueArr = data;
-
-            console.log(data);
+            .success(function(data) {
+                $scope.columnValueArr = data;
+                console.log("maddy check");
+                console.log(data);
         })
-        .error(function(data) {
-            console.log('Error: ' +data);
+            .error(function(data) {
+                console.log('Error: ' +data);
         });  
     }
 }
 
-$scope.removeItem= function(removeVar){
+//deleting data
+$scope.removeData= function(removeVar){
     console.log("in removeItem, value:" + removeVar);
       //sending variable to db(server.js) to delete that value's entire document in db
     $scope.formData={
@@ -98,6 +111,7 @@ $scope.removeItem= function(removeVar){
         });
     }
 
+
 $scope.showValues = function(){
       console.log("in show values api js");
 //fetching values from db(Server.js)
@@ -111,10 +125,25 @@ $scope.showValues = function(){
         });
     }
 
+$scope.doAssignValues =function(temp)
+{
+    $scope.selectedValue=temp;
+    console.log("in doAssignValues: " + temp);
+}
+
+//updating value
 $scope.updateValueFun = function(){
+
+    //capitalize first letter of fname/lname 
+    if($scope.columnValue=="fname" || $scope.columnValue=="lname")
+    {
+         $scope.updatedValue= $scope.updatedValue.charAt(0).toUpperCase() + $scope.updatedValue.slice(1);
+    }
+
     console.log("in update function js");
-    console.log("old value:"+ $scope.selectedValue + "new value:" + $scope.updatedValue);
+    console.log("column value: "+$scope.columnValue+ " old value:"+ $scope.selectedValue + " new value:" + $scope.updatedValue);
         $scope.formData = {
+        columnValue: $scope.columnValue,
         oldValue: $scope.selectedValue,
         newValue: $scope.updatedValue
         };
@@ -122,12 +151,20 @@ $scope.updateValueFun = function(){
     $http.post('/api/updateData', $scope.formData)
         .success(function(data)
         {
-            console.log(data);
             $scope.showValues();
+            $scope.isUpdateSuccess= true ;
+            $scope.isUpdateFailed=false ;
+            $scope.isValidFailed=false ;
+            $scope.isSuccess= false ;
+            console.log(data);
         })
         .error(function(err)
         {
-        console.log("error:" + err);
+            $scope.isUpdateSuccess= false ;
+            $scope.isUpdateFailed=true ;
+            $scope.isValidFailed=false ;
+            $scope.isSuccess= false ;
+            console.log("error:" + err);
         });
     }
 });

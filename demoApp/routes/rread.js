@@ -20,14 +20,18 @@ exports.showData= function(req, res)
             console.log(data);
             res.json(data);
         });
-    }
+}
 
-
+/*
+This api is used list the coloumns
+@params req{object} http req object from client
+@params req{object}  
+*/
 exports.showColumnData= function(req, res) 
 { 
     
     var queryVar={};
-    var projectionVar = {"fname":1,"lname":1,"age":1} ;
+    var projectionVar ={} ;
     
     console.log("in showColumn Data server api: "+ req.body.columnValue);
     console.log(req.body);
@@ -48,10 +52,7 @@ exports.showColumnData= function(req, res)
                   projectionVar = { "age":1, _id:0 } ;
                  console.log("age selected");
         }
-        //var mdemoCollectionObj = new mdemoCollection();
-
- //var jsonProjection = {_id:0,"year":1,"quarter":1,"daily":1,"sms":1,"paid":1} ;
-
+        
         mdemoCollection.find(queryVar,
                             projectionVar,
             function(err, data) {
@@ -64,5 +65,9 @@ exports.showColumnData= function(req, res)
             console.log(data);
             res.json(data);
         });
+
+
+
+        
 
 }

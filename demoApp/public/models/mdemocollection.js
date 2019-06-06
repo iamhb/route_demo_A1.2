@@ -6,14 +6,12 @@
 ****************************************************************************************/
 
 var mongoose = require('mongoose');
-
-
 var Schema = mongoose.Schema;
 
 var demoCollectionSchema = new Schema({
 	fname: {type: String},
    	lname: {type: String},
-   	age: {type: Number}
+   	age: {type: String}
 });
 
 var demoCollection= mongoose.model('demoCollection', demoCollectionSchema);
