@@ -1,10 +1,15 @@
 /****************************************************************************************
 *  Created By  : Haribalan                                                              *
 *  Purpose:    : calling of routes from app.js                                          *
-*  Created At  : 05-05-2019                                                             *
+*  Created At  : 10-05-2019                                                             *
 *  Modified At :                                                                        *
 ****************************************************************************************/
 var mdemoCollection = require('../models/mdemocollection').demoCollection;
+
+/*
+used to show all data in db
+@params no params from client
+*/
 
 exports.showData= function(req, res) 
 { 
@@ -20,54 +25,4 @@ exports.showData= function(req, res)
             console.log(data);
             res.json(data);
         });
-}
-
-/*
-This api is used list the coloumns
-@params req{object} http req object from client
-@params req{object}  
-*/
-exports.showColumnData= function(req, res) 
-{ 
-    
-    var queryVar={};
-    var projectionVar ={} ;
-    
-    console.log("in showColumn Data server api: "+ req.body.columnValue);
-    console.log(req.body);
-        if(req.body.columnValue == "fname")
-        {
-                 projectionVar = { "fname":1, _id:0} ;
-                 console.log("fname selected");
-        }
-
-        else if(req.body.columnValue == "lname")
-        {
-                 projectionVar = { "lname":1, _id:0} ;
-                 console.log("lname selected");
-
-        }else if(req.body.columnValue == "age")
-        {
-
-                  projectionVar = { "age":1, _id:0 } ;
-                 console.log("age selected");
-        }
-        
-        mdemoCollection.find(queryVar,
-                            projectionVar,
-            function(err, data) {
-            if (err)
-            {
-                res.send(err)
-                console.log(err);
-            }
-            console.log("showing column values");
-            console.log(data);
-            res.json(data);
-        });
-
-
-
-        
-
 }
