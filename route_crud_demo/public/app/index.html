@@ -2,13 +2,9 @@
 <!-- define angular app -->
 <html ng-app="scotchApp">
 <head>
-
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-
-
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
   <script src="indexctrl.js"></script>
@@ -21,22 +17,18 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Angular Routing Demo</a>
       </div>
-
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="#add"><i class="fa fa-shield"></i> Add</a></li>
+        <li><a href="#add/{{sp}}"><i class="fa fa-shield"></i> Add</a></li>
         <li><a href="#edit"><i class="fas fa-pen"></i> Edit</a></li>
       </ul>
     </div>
   </nav>
 
   <div id="main" align="center">
-  <h1>
-<!--     In Main Div -->
-  </h1>
     <!-- angular templating -->
 		<!-- this is where content will be injected -->
-  <div ng-view></div>
+    <div ng-view></div>
   </div>
   
 </body>

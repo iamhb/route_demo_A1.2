@@ -1,0 +1,67 @@
+<div class="container-fluid">
+<div class="col-md-4 col-md-offset-4 panel panel-info" style="padding: 0px;">
+
+    <div class="panel-heading"> <h4>Update Data</h4> </div>
+
+			<form name="myUpdateForm">
+
+          <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+            <div class="form-group">
+                 <br> <label>ID </label>
+                  <input type="text" class="form-control" ng-model="idTextBoxValue" readonly>
+            </div>
+          </div>
+        </div>
+
+
+
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+            	<div class="form-group">
+              			<!-- <h3 class="head" align="center"></h3> -->
+               			<label>First Name: </label>
+              			<input type="text" class="form-control text-capitalize" ng-model="updatefirstname" required ng-minlength="3">
+            	</div>
+            </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+		        <div class="form-group">
+			            <label>Last Name: </label>
+			            <input type="text" class="form-control text-capitalize" ng-model="updatelastname" ng-minlength="3" required>
+		        </div>
+          </div>
+        </div>
+
+           <div class="row">
+              <div class="col-md-10 col-md-offset-1">   
+		        <div class="form-group">
+			            <label>Age: </label>
+			            <input type="text" class="form-control" ng-model="updateage" ng-minlength="1" ng-maxlength="2" ng-required><br>
+		        </div>
+          </div>
+        </div>
+            	<div class="panel-footer">
+            			<button type="submit" class="btn btn-success" ng-click="updateData()" ng-disabled="myUpdateForm.$invalid">Update</button>
+
+              	<div class="alert alert-success" ng-show="isUpdateSuccess" style="margin-top: 10px;">
+                			<strong>Thanks!</strong> Thanks! Data has been updated successfully
+              	</div>
+
+                <div class="alert alert-danger" ng-show="isNoModifyDone" style="margin-top: 10px; ">
+                      <strong>Sorry!</strong> No modification done with data
+                </div>
+
+
+              	<div class="alert alert-danger" ng-show="isUpdateFailed" style="margin-top: 10px; ">
+                			<strong>Sorry!</strong> Data has not been updated
+             		</div>
+              </div>
+
+
+    		</form>
+
+		</div>
+  </div>

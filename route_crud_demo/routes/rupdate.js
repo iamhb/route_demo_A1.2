@@ -20,9 +20,9 @@ exports.updateData= function (req, res)
 {
     console.log(" in update api ");
     console.log("values:");
-    console.log(req.body.refValue+ " "+ req.body.newFname + " " + req.body.newLname + " "+ req.body.newAge);
+    console.log(req.body.id+ " "+ req.body.newFname + " " + req.body.newLname + " "+ req.body.newAge);
 
-    mdemoCollection.updateOne(  {"fname" : req.body.refValue },
+    mdemoCollection.updateOne(  { _id : req.body.id },
                                 {$set:{ "fname": req.body.newFname,
                                         "lname": req.body.newLname,
                                         "age": req.body.newAge }},

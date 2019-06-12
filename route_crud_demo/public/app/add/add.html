@@ -1,36 +1,56 @@
-
 <div ng-controller="addController">
-	<div class= "container">
-		<div class="row">
-			<div class="col-md-4"></div> <!-- left align -->
-			<div  class="col-md-4 panel panel-default pad"> <!-- center align -->
+	<div class= "container-fluid">
 
+			<div  class="col-md-4 col-md-offset-4 panel panel-info"  style="padding: 0px;"> 
+
+ 			<div class="panel-heading"> <h4>Add Data</h4> </div>
 				<form name="myForm">
+		    	<div class="row">
+            	<div class="col-md-10 col-md-offset-1">
             		<div class="form-group">
-              			<h3 class="head" align="center">Add Data</h3>
+            			<br>
               			<label>First Name: </label>
               			<input type="text" class="form-control text-capitalize" ng-model="firstname" required ng-minlength="3">
             		</div>
+				</div>
+          		</div>
+
+ 				<div class="row">
+              	<div class="col-md-10 col-md-offset-1">
 		            <div class="form-group">
 			            <label>Last Name: </label>
 			            <input type="text" class="form-control text-capitalize" ng-model="lastname" ng-minlength="3" required>
 		            </div>
+				</div>
+         		</div>
+
+ 				<div class="row">
+              	<div class="col-md-10 col-md-offset-1">
 		            <div class="form-group">
 			            <label>Age: </label>
-			            <input type="number" class="form-control" ng-model="age" ng-minlength="1" ng-maxlength="2" ng-required>
+			            <input type="number" class="form-control" ng-model="age" ng-minlength="1" ng-maxlength="2" ng-required><br>
 		            </div>
-            		<div align="center">
+				</div>
+          		</div>		            
+
+          		<div class="panel-footer">	
             			<button type="submit" class="btn btn-success" ng-click="createData()" ng-disabled="myForm.$invalid">Add</button>
-            		</div><br>
-            		<div class="alert alert-success" ng-show="isSuccess">
+
+            		<div class="alert alert-success" ng-show="isSuccess" style="margin-top: 10px; ">
               			<strong>Success!</strong> Thanks! Data has been added successfully
             		</div>
-            		<div class="alert alert-danger" ng-show="isValidFailed">
-              			<strong>Danger!</strong> Kindly provide us valid information
+
+            		<div class="alert alert-danger" ng-show="isValidFailed" style="margin-top: 10px; ">
+              			<strong>Sorry!</strong> Kindly provide us valid information
            			</div>
+
+           			<div class="alert alert-danger" ng-show="isMatchFound" style="margin-top: 10px; ">
+              			<strong>Sorry!</strong> Data already exist
+           			</div>
+
+           		</div>
     			</form>
 			</div>
-			<div class="col-md-4"></div> <!-- right align -->
 		</div> <!-- row  -->
 	</div> <!-- container  -->
 </div>

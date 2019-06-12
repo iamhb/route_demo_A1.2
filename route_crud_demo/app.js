@@ -1,8 +1,3 @@
-/*
-This api is used list the coloumns
-@params req{object} http req object from client
-@params req{object}  
-*/
 
 var createError = require('http-errors');
 var express = require('express');
@@ -51,7 +46,9 @@ app.get('/', function(req,res){
 
 app.get('/api/showData',read.showData);
 
-app.post('/api/showColumnData',read.showColumnData);
+//app.post('/api/showColumnData',read.showColumnData);
+
+app.get('/api/showDataById:id', read.showDataById)
 
 app.post('/api/addData',create.addData);
 

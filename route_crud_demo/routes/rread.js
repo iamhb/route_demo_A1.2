@@ -26,3 +26,27 @@ exports.showData= function(req, res)
             res.json(data);
         });
 }
+
+exports.showDataById= function(req, res)  { 
+    console.log(req.params.id);
+    console.log("----in showDataById server api" + req.params.id + "-----");
+        //var mdemoCollectionObj = new mdemoCollection();
+    mdemoCollection.find({ _id:req.params.id },function(err, data) {
+        if (err)
+        {
+            res.send(err)
+            console.log(err);
+        }else
+        {
+            console.log("value fetched by id");
+            console.log(data);
+            /*let resObj = {
+                data:data
+            }*/
+            res.json(data);
+        }
+    });
+}
+
+
+

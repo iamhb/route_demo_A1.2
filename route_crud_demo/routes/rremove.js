@@ -17,8 +17,8 @@ req object={
 
 exports.removeData= function (req, res) {
 	console.log("In Server Remove");
-    console.log("values:" + req.body.remVar);
-    mdemoCollection.remove( {"fname": req.body.remVar },
+    console.log("id value: " + req.body.remVar);
+    mdemoCollection.remove( { _id : req.body.remVar },
         function (err, docs) {
                 if(err)
                     {
