@@ -1,46 +1,39 @@
-
 <div class= "container-fluid">
-
-		<div class="col-md-6 col-md-offset-3 panel panel-info" style="padding: 0px;">
-
+	<div class="col-md-6 col-md-offset-3 panel panel-info" style="padding: 0px;">
 		<div class="panel-heading"> <h4>View Data</h4> </div>
-			<div class="row">
-              <div class="col-md-10 col-md-offset-1">	
-
-
-			<table class="table table-striped" align="center">
-	          	<thead>
-		            <tr>
-		                <th>S.No</th>
-		                <th>ID</th>
-		              	<th>First Name</th>
-		              	<th>Last Name</th>
-		              	<th>Age</th>
-		              
-		            </tr>
-	         	</thead>
-	          	<tbody>
-		            <tr ng-repeat="todo in todos">
-		              <td>{{ $index + 1 }}. </td>
-		              <td>{{ todo._id }} </td>
-		              <td> {{ todo.fname }} </td>
-		              <td>{{ todo.lname }} </td>
-		              <td>{{ todo.age }} </td>
-		              <!-- edit function, route to update with id -->
-		               <td>  <a href="#update/{{todo._id}}" class="glyphicon glyphicon-pencil"></a> </td>
-		              <!-- delete function -->
-		              <td class="glyphicon glyphicon-remove" ng-click="removeData(todo._id)">	</td>
-		            </tr>
-	        	</tbody>
-       		</table>
-
-       		<div ng-if="!todos[0].fname">
-       		<div class="alert alert-danger" style="margin-top: 10px; ">
-              			<strong>Sorry!</strong> No data found
-           	</div>
-           </div>
+		<div class="row">
+            <div class="col-md-10 col-md-offset-1">	
+				<table class="table table-striped" align="center">
+	         			<thead>
+		           		<tr>
+			                <th>S.No</th>
+			                <th>ID</th>
+			              	<th>First Name</th>
+			              	<th>Last Name</th>
+			              	<th>Age</th>
+		          			</tr>
+	        			</thead>
+	         			<tbody>
+				        <tr ng-repeat="todo in todos">
+				            <td>{{ $index + 1 }}. </td>
+				            <td>{{ todo._id }} </td>
+				            <td> {{ todo.fname }} </td>
+				            <td>{{ todo.lname }} </td>
+				            <td>{{ todo.age }} </td>
+				              <!-- edit function, route to update with id -->
+				            <td>  <a href="#update/{{todo._id}}" class="glyphicon glyphicon-pencil"></a> </td>
+				              <!-- delete function -->
+				            <td class="glyphicon glyphicon-remove" ng-click="removeData(todo._id)">	</td>
+		           		</tr>
+	       			</tbody>
+       			</table>
+       			<!-- showing no data alert,when db is empty -->
+		      	<div ng-if="!todos[0].fname">
+		      		<div class="alert alert-danger" style="margin-top: 10px; ">
+		             	<strong>Sorry!</strong> No data found
+		          	</div>
+		        </div>
+       		</div>
        	</div>
-       </div>
-		</div>
 	</div>
 </div>

@@ -1,6 +1,5 @@
 	// create the module and name it scotchApp
 	var scotchApp = angular.module('scotchApp', ['ngRoute']);
-
 	// configure our routes
 	scotchApp.config(function($routeProvider) 
 	{
@@ -27,7 +26,8 @@
 	});
 
 	// create the controller and inject Angular's $scope
-	scotchApp.controller('mainController', function($rootScope, $scope, $http) {
+	scotchApp.controller('mainController', function($rootScope, $scope, $http) 
+	{
 		$scope.sp="";
 	});
 
@@ -68,6 +68,9 @@
 		        	{
 		        		//if match found then add to db
 		        		$scope.isMatchFound=true;
+		        		$scope.firstname="";
+			    		$scope.lastname="";
+			    		$scope.age="";
 		        	}
 		        }
 		        //if match not found then add to db
@@ -87,6 +90,10 @@
 		                console.log(data);
 		                $scope.isSuccess= true ;
 		                $scope.isValidFailed=false ;
+		                $scope.firstname="";
+			    		$scope.lastname="";
+			    		$scope.age="";
+
 		            })
 		            .error(function(data) 
 		            {
@@ -126,6 +133,7 @@
         {
             console.log('Error: ' + data);
         });
+
         $scope.showValues = function()
         {
 	      	console.log("in show values api js");
@@ -144,17 +152,7 @@
 	            console.log('Error: ' + data);
 	        });
     	}
-        /*$scope.showDataInUpdate= function(tempTodoArr)
-        {
-        	console.log("showDataInUpdate");
-        	console.log(tempTodoArr);
-
-        	$scope.updatefirstname= tempTodoArr.fname
-        	$scope.updatelastname=tempTodoArr.lname
-        	$scope.updateage=tempTodoArr.age;
-        	$scope.refVar=tempTodoArr.fname; //for mongodb reference
-        }
-*/
+    	//deleting data
         $scope.removeData= function(removeVar)
         {
 	    	console.log("in removeItem, value:" + removeVar);
@@ -175,7 +173,7 @@
 	        });
     	}
 	});
-
+	//update route
 	scotchApp.controller('updateController', function($scope, $http, $routeParams) 
 	{
 		$scope.updateRouteCheck= "in update";
@@ -210,6 +208,7 @@
 
 		$scope.updateData=function()
         {
+        	//false by default to all alert flag
         	$scope.isUpdateSuccess= false;
 		    $scope.isUpdateFailed=false;
 		    $scope.isNoModifyDone=false;
@@ -221,6 +220,7 @@
         		$scope.updatefirstname= $scope.updatefirstname.charAt(0).toUpperCase() + $scope.updatefirstname.slice(1);
 		        $scope.updatelastname=  $scope.updatelastname.charAt(0).toUpperCase() + $scope.updatelastname.slice(1);
              	console.log("in update function js");
+
              	//checking modification done with old values, if true
              	if(!( ($scope.updatefirstname == updateByIdValues[0].fname) && ($scope.updatelastname==updateByIdValues[0].lname )))
              	{
@@ -230,6 +230,7 @@
 								        newLname: $scope.updatelastname,
 								        newAge: $scope.updateage
 	       					  		};
+	       			//sending all updated values
 				    $http.post('/api/updateData', $scope.formData)
 				        .success(function(data)
 				        {

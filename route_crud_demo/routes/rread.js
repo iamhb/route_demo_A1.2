@@ -14,7 +14,6 @@ used to show all data in db
 exports.showData= function(req, res) 
 { 
 	console.log("in showData server api");
-    
         //var mdemoCollectionObj = new mdemoCollection();
         mdemoCollection.find(function(err, data) {
             if (err)
