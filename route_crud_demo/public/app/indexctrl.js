@@ -33,26 +33,28 @@
 
 	scotchApp.controller('addController', function($rootScope, $scope, $http, $routeParams) 
 	{	
-		// to store fetched db values
-		var todosVar=[];
+		// $scope.empCount=0;
 		//false value by default to all alerts
-		$scope.isMatchFound=false;
+		// $scope.isMatchFound=false;
 		$scope.isValidFailed=false;
 		$scope.isSuccess= false;
 
-		//fetching all values from db and store in todosVar
-		$http.get('/api/showData')
-        .success(function(data) 
-        {
-            todosVar=data;
-            console.log(data);
-            console.log(todosVar.length);
-        })
-        .error(function(data) 
-        {
-            console.log('Error: ' + data);
-        });
-
+		/*//fetching count of employees
+		$http.get('/api/showDataCount')
+       		.success(function(data) 
+		        {
+		       	  console.log(data);
+		          $scope.empCount = data;
+		          //concatinating value to show in textbox-add.html
+		          console.log("emp count:" + $scope.empCount);
+		          $scope.empCountShow=  "EMP0" + $scope.empCount;
+		          console.log($scope.empCountShow);
+		      	})
+		    .error(function(data) 
+		      	{
+		          console.log('Error: ')
+		          console.log(data);
+		      	});*/
         //function called when add button clicked
 		$scope.createData = function() 
 		{
@@ -60,54 +62,33 @@
 		    if($scope.firstname && $scope.lastname &&  $scope.age && $scope.age >=1)
 		    {
 		        $scope.firstname= $scope.firstname.charAt(0).toUpperCase() + $scope.firstname.slice(1);
-		        $scope.lastname=  $scope.lastname.charAt(0).toUpperCase() + $scope.lastname.slice(1);		            
-				//checking values already exist in db		
-		        for(let i=0;i<todosVar.length;i++)
-		        {
-		        	if((todosVar[i].fname==$scope.firstname) && (todosVar[i].lname==$scope.lastname ))
-		        	{
-		        		//if match found then add to db
-		        		$scope.isMatchFound=true;
-		        		$scope.firstname="";
-			    		$scope.lastname="";
-			    		$scope.age="";
-		        	}
-		        }
-		        //if match not found then add to db
-		        if(!$scope.isMatchFound)
-		        {
-		            $scope.formData = {
-							            fname: $scope.firstname,
-							            lname: $scope.lastname,
-							            age: $scope.age
-		            				  };
+		        $scope.lastname=  $scope.lastname.charAt(0).toUpperCase() + $scope.lastname.slice(1);
+		        $scope.formData ={
+		        					empid: $scope.empid,
+							        fname: $scope.firstname,
+							        lname: $scope.lastname,
+							        age: $scope.age
+		            			  };
 		    	//console.log("formdata:  " + $scope.formData);
+		    	console.log("formData");
 		        console.log($scope.formData);
 		        //sending values to db(server.js)
 		        $http.post('/api/addData', $scope.formData)
-		            .success(function(data) {
-		                $scope.todos = data; //assigning value from db(Server.js)
+		            .success(function(data) 
+		            {
+		                console.log(data.message);
 		                console.log(data);
-		                $scope.isSuccess= true ;
-		                $scope.isValidFailed=false ;
-		                $scope.firstname="";
-			    		$scope.lastname="";
-			    		$scope.age="";
-
+		                $scope.addFlagStatus=data.addFlag;
+		               // $scope.isSuccess= true ;
+		                $scope.isValidFailed=(!data.addFlag);
 		            })
 		            .error(function(data) 
 		            {
 		                console.log('Error: '+data);
-		                $scope.isValidFailed=true;
+		                console.log(data.message)
+		                $scope.isValidFailed=(!data.addFlag);
 		       			$scope.isSuccess= false;
 		            });
-		   		}
-		   		//if isMatchFound = true, false these below variables, for showing only match found alert
-			    else
-			    {	
-			        $scope.isValidFailed=false;
-			        $scope.isSuccess= false;
-			    }
 			}
 			//if validation failed, then true valiation failed alert
 			else
@@ -177,13 +158,13 @@
 	scotchApp.controller('updateController', function($scope, $http, $routeParams) 
 	{
 		$scope.updateRouteCheck= "in update";
-		$scope.id= $routeParams.id;
+		$scope.empid= $routeParams.id;
 		var updateByIdValues = [];
-		console.log($scope.updateRouteCheck + " " + $scope.id);
-	    console.log("in show values by id");
+		console.log($scope.updateRouteCheck + " " + $scope.empid);
+	    console.log("in show values by empid");
 
 		//fetching values from db(Server.js)
-     	$http.get('/api/showDataById'+$scope.id)
+     	$http.get('/api/showDataById'+$scope.empid)
         .success(function(data) 
         {
         	/*console.log("data ithaan");*/
@@ -196,7 +177,7 @@
 	        console.log($scope.updateByIdValues[0].lname);
 	        console.log($scope.updateByIdValues[0].age);*/
 			// console.log($scope.updateByIdValues[0]._id);
-			$scope.idTextBoxValue=updateByIdValues[0]._id
+			$scope.idTextBoxValue=updateByIdValues[0].empid
 	        $scope.updatefirstname= updateByIdValues[0].fname;
       		$scope.updatelastname=updateByIdValues[0].lname;
       		$scope.updateage=updateByIdValues[0].age;
@@ -213,7 +194,7 @@
 		    $scope.isUpdateFailed=false;
 		    $scope.isNoModifyDone=false;
 
-        	console.log("checking scope: " + updateByIdValues[0]._id);
+        	console.log("checking scope: " + updateByIdValues[0].empid);
         	//checking validation if true
         	if( $scope.updatefirstname && $scope.updatelastname && ($scope.updateage && $scope.updateage >=1) )
         	{
@@ -222,10 +203,10 @@
              	console.log("in update function js");
 
              	//checking modification done with old values, if true
-             	if(!( ($scope.updatefirstname == updateByIdValues[0].fname) && ($scope.updatelastname==updateByIdValues[0].lname )))
-             	{
+             	// if(!( ($scope.updatefirstname == updateByIdValues[0].fname) && ($scope.updatelastname==updateByIdValues[0].lname )))
+             	// {
 	        		$scope.formData={
-								        id: updateByIdValues[0]._id,
+								        empid: updateByIdValues[0].empid,
 								        newFname: $scope.updatefirstname,
 								        newLname: $scope.updatelastname,
 								        newAge: $scope.updateage
@@ -235,9 +216,10 @@
 				        .success(function(data)
 				        {
 				            console.log(data);
-				            $scope.isUpdateSuccess= true;
+				            console.log(data.updateFlag);
+				            /*$scope.isUpdateSuccess= true;
 						    $scope.isUpdateFailed=false;
-						    $scope.isNoModifyDone=false;
+						    $scope.isNoModifyDone=false;*/
 				        })
 				        .error(function(err)
 				        {
@@ -246,14 +228,14 @@
 						    $scope.isUpdateFailed=true;
 						    $scope.isNoModifyDone=false;
 				        });
-			    }
-			    //if no modification is done with old values
-			    else
-			    {
-			    	$scope.isUpdateSuccess= false;
-					$scope.isUpdateFailed=false;
-					$scope.isNoModifyDone=true;
-			    }
+			  //   }
+			  //   //if no modification is done with old values
+			  //   else
+			  //   {
+			  //   	$scope.isUpdateSuccess= false;
+					// $scope.isUpdateFailed=false;
+					// $scope.isNoModifyDone=true;
+			  //   }
 		    }
 		    //if validation failed
 	        else

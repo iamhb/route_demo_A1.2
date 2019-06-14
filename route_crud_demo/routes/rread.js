@@ -27,10 +27,10 @@ exports.showData= function(req, res)
 }
 
 exports.showDataById= function(req, res)  { 
-    console.log(req.params.id);
-    console.log("----in showDataById server api" + req.params.id + "-----");
+    console.log(req.params.empid);
+    console.log("----in showDataById server api" + req.params.empid + "-----");
         //var mdemoCollectionObj = new mdemoCollection();
-    mdemoCollection.find({ _id:req.params.id },function(err, data) {
+    mdemoCollection.find({ empid:req.params.empid },function(err, data) {
         if (err)
         {
             res.send(err)
@@ -47,5 +47,22 @@ exports.showDataById= function(req, res)  {
     });
 }
 
-
+exports.showDataCount= function(req, res) 
+{ 
+    console.log("in showData server api");
+        //var mdemoCollectionObj = new mdemoCollection();
+        mdemoCollection.find(function(err, data) {
+            if (err)
+            {
+                res.json(err);
+                console.log(err);
+            }
+            else
+            {
+                console.log("length:");
+                console.log(data.length);
+                res.json(data.length);  
+            }
+        });
+}
 

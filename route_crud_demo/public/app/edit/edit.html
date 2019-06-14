@@ -3,11 +3,11 @@
 		<div class="panel-heading"> <h4>View Data</h4> </div>
 		<div class="row">
             <div class="col-md-10 col-md-offset-1">	
-				<table class="table table-striped" align="center">
+				<table class="table table-striped ">
 	         			<thead>
 		           		<tr>
 			                <th>S.No</th>
-			                <th>ID</th>
+			                <th>EmpID</th>
 			              	<th>First Name</th>
 			              	<th>Last Name</th>
 			              	<th>Age</th>
@@ -16,12 +16,13 @@
 	         			<tbody>
 				        <tr ng-repeat="todo in todos">
 				            <td>{{ $index + 1 }}. </td>
-				            <td>{{ todo._id }} </td>
+				            <td>{{todo.empid}}</td>
+				            <!-- <td>{{ todo._id }} </td> -->
 				            <td> {{ todo.fname }} </td>
 				            <td>{{ todo.lname }} </td>
 				            <td>{{ todo.age }} </td>
 				              <!-- edit function, route to update with id -->
-				            <td>  <a href="#update/{{todo._id}}" class="glyphicon glyphicon-pencil"></a> </td>
+				            <td>  <a href="#update/{{todo.empid}}" class="glyphicon glyphicon-pencil"></a> </td>
 				              <!-- delete function -->
 				            <td class="glyphicon glyphicon-remove" ng-click="removeData(todo._id)">	</td>
 		           		</tr>

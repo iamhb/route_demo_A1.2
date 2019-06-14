@@ -11,7 +11,8 @@ var Schema = mongoose.Schema;
 var demoCollectionSchema = new Schema({
 	fname: {type: String},
    	lname: {type: String},
-   	age: {type: String}
+   	age: {type: String},
+   	empid: {type: String}
 });
 
 var demoCollection= mongoose.model('demoCollection', demoCollectionSchema);
