@@ -31,24 +31,35 @@
             <div class="col-md-10 col-md-offset-1">   
   		        <div class="form-group">
   			         <label>Age: </label>
-  			         <input type="text" class="form-control" ng-model="updateage" ng-minlength="1" ng-maxlength="2" ng-required><br>
+  			         <input type="text" class="form-control" ng-model="updateage" ng-minlength="1" ng-maxlength="2" required><br>
   		        </div>
             </div>
           </div>
         	<div class="panel-footer">
           	<button type="submit" class="btn btn-success" ng-click="updateData()" ng-disabled="myUpdateForm.$invalid">Update</button>
-                
-            	<div class="alert alert-success" ng-show="isUpdateSuccess" style="margin-top: 10px;">
-              		<strong>Thanks!</strong> Thanks! Data has been updated successfully
-            	</div>
-
-              <div class="alert alert-danger" ng-show="isNoModifyDone" style="margin-top: 10px; ">
-                <strong>Sorry!</strong> No modification done on Username
-              </div>
-
-            	<div class="alert alert-danger" ng-show="isUpdateFailed" style="margin-top: 10px; ">
-            			<strong>Sorry!</strong> Data has not been updated
-            	</div>
+            
+            <div ng-switch="updateStatus">
+                <div ng-switch-when="dataUpdated">
+                      <div class="alert alert-success" style="margin-top: 10px; ">
+                      <strong>Success!</strong> Thanks! Data has been updated successfully
+                      </div>
+                </div>
+                <div ng-switch-when="dataMatchFound">
+                      <div class="alert alert-danger" style="margin-top: 10px; ">
+                  <strong>Sorry!</strong> Data Already exsist
+                      </div>
+                </div>
+                <div ng-switch-when="dataFetchError">
+                    <div class="alert alert-danger" style="margin-top: 10px; ">
+                    <strong>Sorry!</strong> Server Error
+                    </div>
+                </div>
+                <div ng-switch-when="dataValidationError">
+                    <div class="alert alert-danger" style="margin-top: 10px; ">
+                    <strong>Sorry!</strong> Kindly Enter valid information
+                    </div>
+                </div>
+              </div><!-- end of switch -->
           </div>
         </form>
   </div>

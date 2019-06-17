@@ -33,29 +33,13 @@
 
 	scotchApp.controller('addController', function($rootScope, $scope, $http, $routeParams) 
 	{	
+		$scope.addStatus="";
 		// $scope.empCount=0;
 		//false value by default to all alerts
 		// $scope.isMatchFound=false;
-		$scope.isValidFailed=false;
-		$scope.isSuccess= false;
+		// $scope.isValidFailed=false;
+		// $scope.isSuccess= false;
 
-		/*//fetching count of employees
-		$http.get('/api/showDataCount')
-       		.success(function(data) 
-		        {
-		       	  console.log(data);
-		          $scope.empCount = data;
-		          //concatinating value to show in textbox-add.html
-		          console.log("emp count:" + $scope.empCount);
-		          $scope.empCountShow=  "EMP0" + $scope.empCount;
-		          console.log($scope.empCountShow);
-		      	})
-		    .error(function(data) 
-		      	{
-		          console.log('Error: ')
-		          console.log(data);
-		      	});*/
-        //function called when add button clicked
 		$scope.createData = function() 
 		{
 			//validating data from client if false then it show enter valid information
@@ -78,26 +62,37 @@
 		            {
 		                console.log(data.message);
 		                console.log(data);
-		                $scope.addFlagStatus=data.addFlag;
-		               // $scope.isSuccess= true ;
-		                $scope.isValidFailed=(!data.addFlag);
+		                $scope.addStatus=data.addStatus;
+		                console.log("addStatus: "+ $scope.addStatus);
+		               //  $scope.addFlagStatus=data.addFlag;
+		               // // $scope.isSuccess= true ;
+		               //  $scope.isValidFailed=(!data.addFlag);
 		            })
 		            .error(function(data) 
 		            {
-		                console.log('Error: '+data);
+		                console.log('Error: ');
+		                console.log(data);
 		                console.log(data.message)
-		                $scope.isValidFailed=(!data.addFlag);
-		       			$scope.isSuccess= false;
+		                $scope.addStatus=data.addStatus;
+		                console.log("addStatus: "+ $scope.addStatus);
+		          //       $scope.isValidFailed=(!data.addFlag);
+		       			// $scope.isSuccess= data.addFlag;
 		            });
+		       // $scope.firstname=$scope.lastname=$scope.age=$scope.empid="";
 			}
 			//if validation failed, then true valiation failed alert
 			else
 			{
+					$scope.addStatus="dataValidationError";
+			    	console.log("validation eror");
+
 			    	//used to show alert about enter valid information
-			        $scope.isValidFailed=true;
-			        $scope.isSuccess= false;
+			        // $scope.isValidFailed=true;
+			        // $scope.isSuccess= false;
 			}
+
 	    }
+
 	});
 
 	scotchApp.controller('editController', function($scope, $http) 
@@ -136,22 +131,25 @@
     	//deleting data
         $scope.removeData= function(removeVar)
         {
-	    	console.log("in removeItem, value:" + removeVar);
-	     	 //sending variable to db(server.js) to delete that value's entire document in db
-	    	$scope.formData={
-	                       		remVar: removeVar,
-	                    	};
-	    	$http.post('/api/removeData', $scope.formData)
-	        .success(function(data) 
-	        {
-	            console.log("delete success");
-	            $scope.showValues();
-	            console.log(data);
-	        })
-	        .error(function(data) 
-	        {
-	            console.log('Error: '+data);
-	        });
+        	var result = confirm("Are you sure to delete?");
+        	if(result){
+		    	console.log("in removeItem, value:" + removeVar);
+		     	 //sending variable to db(server.js) to delete that value's entire document in db
+		    	$scope.formData={
+		                       		remVar: removeVar,
+		                    	};
+		    	$http.post('/api/removeData', $scope.formData)
+		        .success(function(data) 
+		        {
+		            console.log("delete success");
+		            $scope.showValues();
+		            console.log(data);
+		        })
+		        .error(function(data) 
+		        {
+		            console.log('Error: '+data);
+		        });
+	    	}
     	}
 	});
 	//update route
@@ -189,10 +187,11 @@
 
 		$scope.updateData=function()
         {
+        	$scope.updateStatus="";
         	//false by default to all alert flag
-        	$scope.isUpdateSuccess= false;
-		    $scope.isUpdateFailed=false;
-		    $scope.isNoModifyDone=false;
+      //   	$scope.isUpdateSuccess= false;
+		    // $scope.isUpdateFailed=false;
+		    // $scope.isNoModifyDone=false;
 
         	console.log("checking scope: " + updateByIdValues[0].empid);
         	//checking validation if true
@@ -217,32 +216,23 @@
 				        {
 				            console.log(data);
 				            console.log(data.updateFlag);
+				            console.log(data.message);
+				            $scope.updateStatus=data.updateStatus;
 				            /*$scope.isUpdateSuccess= true;
 						    $scope.isUpdateFailed=false;
 						    $scope.isNoModifyDone=false;*/
 				        })
 				        .error(function(err)
 				        {
-				            console.log("error:" + err);
-				            $scope.isUpdateSuccess= false;
-						    $scope.isUpdateFailed=true;
-						    $scope.isNoModifyDone=false;
+				            console.log("error:");
+				            console.log(err);
+				            $scope.updateStatus=err.updateStatus;
 				        });
-			  //   }
-			  //   //if no modification is done with old values
-			  //   else
-			  //   {
-			  //   	$scope.isUpdateSuccess= false;
-					// $scope.isUpdateFailed=false;
-					// $scope.isNoModifyDone=true;
-			  //   }
 		    }
 		    //if validation failed
 	        else
 	        {
-	        	$scope.isUpdateSuccess= false;
-			    $scope.isUpdateFailed=true;
-			    $scope.isNoModifyDone=false; 
+				$scope.updateStatus="dataValidationError";
 	        }
    		}
 	});
