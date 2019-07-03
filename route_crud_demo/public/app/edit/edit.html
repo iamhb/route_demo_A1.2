@@ -14,7 +14,7 @@
 		          			</tr>
 	        			</thead>
 	         			<tbody>
-				        <tr ng-repeat="todo in todos">
+				        <tr ng-repeat="todo in todos ; ">
 				            <td>{{ $index + 1 }}. </td>
 				            <td>{{todo.empid}}</td>
 				            <!-- <td>{{ todo._id }} </td> -->
@@ -37,4 +37,20 @@
        		</div>
        	</div>
 	</div>
+</div>
+
+
+<div class="container" style="text-align:center;">
+    <table class="table table-bordered">
+       <tr ng-repeat="todo in todos" >
+	        <td ng-repeat="todo in todos">
+	        	<form name="myForm">
+	            {{$parent.$index}}{{$index}}
+	        	<input type="text"  name=question ng-model="male[$parent.$index][$index]"  required> 
+	        	</form>
+	        </td>
+        </tr>
+    </table>
+{{male}}
+<button type="submit" name="submit" ng-click="showAll2D()" ng-disabled="myForm.$invalid">Submit</button>
 </div>

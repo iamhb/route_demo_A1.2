@@ -97,6 +97,19 @@
 
 	scotchApp.controller('editController', function($scope, $http) 
 	{
+			$scope.male=[];
+		$scope.swat=function(){
+			console.log("dummmmyyyyy");
+			console.log($scope.male);
+			console.log("-----------");
+			// console.log($scope.male[0][0]);
+		}
+
+		$scope.showAll2D=function(){
+			console.log($scope.male);
+		}
+
+		console.log($scope.male);
 		console.log("in show values api js");
 		//fetching values from db(Server.js)
      	$http.get('/api/showData')
